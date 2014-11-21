@@ -1,0 +1,206 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.js-class-header{
+	position: relative;
+	padding: 30px 15px;
+	color: rgba(255,255,255, .75);
+	text-align: center;
+	text-shadow: 0 1px 0 rgba(0,0,0,.1);
+	background-color: #D8C635;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#AF9E19),to(#D8C635));
+	background-image: -webkit-linear-gradient(top,#AF9E19 0,#D8C635 100%);
+	background-image: -o-linear-gradient(top,#AF9E19 0,#D8C635 100%);
+	background-image: linear-gradient(to bottom,#AF9E19 0,#D8C635 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AF9E19', endColorstr='#D8C635', GradientType=0);
+	background-repeat: repeat-x;
+}
+
+.js-class-header
+{
+	font-size: 20px;
+	margin-bottom: 40px;
+}
+.js-class-header h1
+{
+	color: #fff;
+	margin-top: 0;
+}
+.js-class-header p
+{
+	font-weight: 300;
+	line-height: 1.4;
+	margin-bottom: 0;
+}
+.js-class-header .container
+{
+	position: relative;
+}
+@media (min-width:768px)
+{
+	.js-class-header
+	{
+		font-size: 24px;
+		padding-bottom: 60px;
+		padding-top: 60px;
+		text-align: left;
+	}
+	.js-class-header h1
+	{
+		font-size: 60px;
+		line-height: 1;
+	}
+}
+@media (min-width:992px)
+{
+	.js-class-header h1,.js-class-header p
+	{
+		margin-right: 380px;
+	}
+}
+
+.js-class-section
+{
+	margin-bottom: 60px;
+}
+.js-class-section:last-child
+{
+	margin-bottom: 0;
+}
+
+.js-class-sidebar.affix
+{
+	position: static;
+}
+@media (min-width:768px)
+{
+	.js-class-sidebar
+	{
+		padding-left: 20px;
+	}
+}
+.js-class-sidenav
+{
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+.js-class-sidebar .nav>li>a
+{
+	color: #999;
+	display: block;
+	font-size: 13px;
+	font-weight: 500;
+	padding: 4px 20px;
+}
+.js-class-sidebar .nav>li>a:hover,.js-class-sidebar .nav>li>a:focus
+{
+	background-color: transparent;
+	border-left: 1px solid #D8C635;
+	color: #D8C635;
+	padding-left: 19px;
+	text-decoration: none;
+}
+.js-class-sidebar .nav>.active>a,.js-class-sidebar .nav>.active:hover>a,.js-class-sidebar .nav>.active:focus>a
+{
+	background-color: transparent;
+	border-left: 2px solid #D8C635;
+	color: #D8C635;
+	font-weight: 700;
+	padding-left: 18px;
+}
+.js-class-sidebar .nav .nav
+{
+	display: none;
+	padding-bottom: 10px;
+}
+.js-class-sidebar .nav .nav>li>a
+{
+	font-size: 12px;
+	font-weight: 400;
+	padding-bottom: 1px;
+	padding-left: 30px;
+	padding-top: 1px;
+}
+.js-class-sidebar .nav .nav>li>a:hover,.js-class-sidebar .nav .nav>li>a:focus
+{
+	padding-left: 29px;
+}
+.js-class-sidebar .nav .nav>.active>a,.js-class-sidebar .nav .nav>.active:hover>a,.js-class-sidebar .nav .nav>.active:focus>a
+{
+	font-weight: 500;
+	padding-left: 28px;
+}
+
+@media (min-width:992px)
+{
+	.js-class-sidebar .nav>.active>ul
+	{
+		display: block;
+	}
+	.js-class-sidebar.affix,.js-class-sidebar.affix-bottom
+	{
+		width: 213px;
+	}
+	.js-class-sidebar.affix
+	{
+		position: fixed;
+		top: 20px;
+	}
+	.js-class-sidebar.affix-bottom
+	{
+		position: absolute;
+	}
+	.js-class-sidebar.affix-bottom .js-class-sidenav,.js-class-sidebar.affix .js-class-sidenav
+	{
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+}
+@media (min-width:1200px)
+{
+	.js-class-sidebar.affix-bottom,.js-class-sidebar.affix
+	{
+		width: 263px;
+	}
+}
+
+.js-class-footer
+{
+	border-top: 1px solid #e5e5e5;
+	color: #777;
+	margin-top: 100px;
+	padding-bottom: 40px;
+	padding-top: 40px;
+	text-align: center;
+}
+.js-class-footer-links
+{
+	color: #999;
+	margin-top: 20px;
+	padding-left: 0;
+}
+.js-class-footer-links li
+{
+	display: inline;
+	padding: 0 2px;
+}
+.js-class-footer-links li:first-child
+{
+	padding-left: 0;
+}
+@media (min-width:768px)
+{
+	.js-class-footer p
+	{
+		margin-bottom: 0;
+	}
+}
+
+.js-class-featurette+.js-class-footer
+{
+	border-top: 0;
+	margin-top: 0;
+}

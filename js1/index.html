@@ -1,0 +1,1539 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>資訊創意課程 Javascript 01</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  background-color: #f7f7f7;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+
+code, pre {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  overflow: auto;
+  padding: 6px 10px;
+}
+
+code {
+  padding: 0 5px;
+}
+
+pre>code {
+  margin: 0; padding: 0;
+  border: none;
+  background: transparent;
+}
+
+pre .comment,
+pre .template_comment,
+pre .diff .header,
+pre .javadoc {
+  color: #998;
+  font-style: italic
+}
+
+pre .keyword,
+pre .css .rule .keyword,
+pre .winutils,
+pre .javascript .title,
+pre .nginx .title,
+pre .subst,
+pre .request,
+pre .status {
+  color: #333;
+  font-weight: bold
+}
+
+pre .number,
+pre .hexcolor,
+pre .ruby .constant {
+  color: #099;
+}
+
+pre .string,
+pre .tag .value,
+pre .phpdoc,
+pre .tex .formula {
+  color: #d14
+}
+
+pre .title,
+pre .id {
+  color: #900;
+  font-weight: bold
+}
+
+pre .javascript .title,
+pre .lisp .title,
+pre .clojure .title,
+pre .subst {
+  font-weight: normal
+}
+
+pre .class .title,
+pre .haskell .type,
+pre .vhdl .literal,
+pre .tex .command {
+  color: #458;
+  font-weight: bold
+}
+
+pre .tag,
+pre .tag .title,
+pre .rules .property,
+pre .django .tag .keyword {
+  color: #000080;
+  font-weight: normal
+}
+
+pre .attribute,
+pre .variable,
+pre .lisp .body {
+  color: #008080
+}
+
+pre .regexp {
+  color: #009926
+}
+
+pre .class {
+  color: #458;
+  font-weight: bold
+}
+
+pre .symbol,
+pre .ruby .symbol .string,
+pre .lisp .keyword,
+pre .tex .special,
+pre .prompt {
+  color: #990073
+}
+
+pre .built_in,
+pre .lisp .title,
+pre .clojure .built_in {
+  color: #0086b3
+}
+
+pre .preprocessor,
+pre .pi,
+pre .doctype,
+pre .shebang,
+pre .cdata {
+  color: #999;
+  font-weight: bold
+}
+
+pre .deletion {
+  background: #fdd
+}
+
+pre .addition {
+  background: #dfd
+}
+
+pre .diff .change {
+  background: #0086b3
+}
+
+pre .chunk {
+  color: #aaa
+}
+
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><h1 id="javascript">Javascript</h1>
+<h2 id="-">開始學習程式語言</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-2">
+    <section class="slide-content"><h1 id="-">使用這個工具</h1>
+<h2 id="-">打開瀏覽器，前往我們的開發環境：</h2>
+<h2 id="http-repl-it-languages-javascript"><a href="http://repl.it/languages/JavaScript">http://repl.it/languages/JavaScript</a></h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-3">
+    <section class="slide-content"><h1 id="-">使用這個工具</h1>
+<h2 id="-">打開瀏覽器，前往我們的開發環境：</h2>
+<h2 id="http-repl-it-languages-javascript"><a href="http://repl.it/languages/JavaScript">http://repl.it/languages/JavaScript</a></h2>
+<h2 id="demo">DEMO</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><h1 id="-">有啥可以輸入？</h1>
+<h2 id="-js-">來介紹幾個 JS 基本型態</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h3 id="-">數字</h3>
+<p>直接打</p>
+<pre><code>9</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-6">
+    <section class="slide-content"><h3 id="-">數字</h3>
+<p>直接打，有小數點也行</p>
+<pre><code>9.2</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-7">
+    <section class="slide-content"><h3 id="-">字串</h3>
+<p>可以是一個字，用 <code>&#39;</code> 或者 <code>&quot;</code> 包起來<br>&nbsp;</p>
+<pre><code>&#39;塊&#39;</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-8">
+    <section class="slide-content"><h3 id="-">字串</h3>
+<p>可以是一個字，用 <code>&#39;</code> 或者 <code>&quot;</code> 包起來<br>既然是字&#39;串&#39;，就可以有多個字</p>
+<pre><code>&quot;塊陶啊&quot;</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
+    <section class="slide-content"><h1 id="-">來做點變化吧</h1>
+<h2 id="-">對上面的基本型態做些運算</h2>
+<h2 id="-">從四則運算開始</h2>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-10">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;  </p>
+<pre><code>100 + 20</code></pre>
+<p>得到 <code>120</code></p>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-11">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>減法 <code>-</code><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;  </p>
+<pre><code>100 + 20 - 10</code></pre>
+<p>得到 <code>110</code></p>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-12">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>減法 <code>-</code><br>乘法 <code>*</code><br>&nbsp;<br>&nbsp;<br>&nbsp;  </p>
+<pre><code>100 + 20 - 10 * 7</code></pre>
+<p>得到 <code>50</code></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>減法 <code>-</code><br>乘法 <code>*</code><br>除法 <code>/</code><br>&nbsp;<br>&nbsp;  </p>
+<pre><code>100 + 20 - 10 * 6 / 2</code></pre>
+<p>得到 <code>90</code></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-14">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>減法 <code>-</code><br>乘法 <code>*</code><br>除法 <code>/</code><br>括弧內的先算 <code>()</code><br>&nbsp;  </p>
+<pre><code>(100 + 20 - 10 * 6) / 2</code></pre>
+<p>得到 <code>30</code></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-15">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>減法 <code>-</code><br>乘法 <code>*</code><br>除法 <code>/</code><br>括弧內的先算 <code>()</code><br>One more ... 取餘數 <code>%</code></p>
+<pre><code>(100 + 20 - 10 * 6) / 2 % 11</code></pre>
+<p>得到 <code>8</code></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-16">
+    <section class="slide-content"><h3 id="-">從四則運算開始</h3>
+<p>加法 <code>+</code><br>減法 <code>-</code><br>乘法 <code>*</code><br>除法 <code>/</code><br>括弧內的先算 <code>()</code><br>One more ... 取餘數 <code>%</code></p>
+<pre><code>(100 + 20 - 10 * 6) / 2 % 11</code></pre>
+<p>得到 <code>8</code></p>
+<p>DEMO</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h1 id="-">字串相加</h1>
+<h2 id="-">試著 <code>&quot;大家好！&quot; + &quot;我是西瓜！&quot;</code></h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><h1 id="-">字串相加</h1>
+<h2 id="-">試著 <code>&quot;大家好！&quot; + &quot;我是西瓜！&quot;</code></h2>
+<h2 id="demo">DEMO</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-19">
+    <section class="slide-content"><h1 id="-">第一個非運算指令</h1>
+<h2 id="-">離開純運算式</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-20">
+    <section class="slide-content"><p><pre style="margin-top: 150px"><code style="font-size: 50px">console.log( 數值 )</code></pre></p>
+<h2 id="-">把 <code>數值</code> 印出來！</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-21">
+    <section class="slide-content"><p><pre style="margin-top: 150px"><code style="font-size: 50px">console.log( 數值 )</code></pre></p>
+<h2 id="-">把 <code>數值</code> 印出來！</h2>
+<h2 id="-printf-">和 <code>printf</code> 很相近</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-22">
+    <section class="slide-content"><p><pre style="margin-top: 150px"><code style="font-size: 50px">console.log( 數值 )</code></pre></p>
+<h2 id="-">把 <code>數值</code> 印出來！</h2>
+<h2 id="-printf-">和 <code>printf</code> 很相近</h2>
+<blockquote>
+<p>接下來的多行程式就會漸漸用到了</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-23">
+    <section class="slide-content"><h3 id="-">把他們印出來！</h3>
+<pre><code>console.log( 56 )</code></pre>
+<pre><code>console.log( &quot;大家好！&quot; )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-24">
+    <section class="slide-content"><h3 id="-">把他們印出來！</h3>
+<pre><code>console.log( 56 )</code></pre>
+<pre><code>console.log( &quot;大家好！&quot; + &quot;我要宣布！&quot; )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-25">
+    <section class="slide-content"><h3 id="-">把他們印出來！</h3>
+<pre><code>console.log( 56 )</code></pre>
+<pre><code>console.log( &quot;大家好！&quot; + &quot;我要宣布！&quot; )</code></pre>
+<pre><code>console.log( ((100 + 20 - 10 * 6) / 2 % 11 * 10) )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-26">
+    <section class="slide-content"><h3 id="-">把他們印出來！</h3>
+<pre><code>console.log( 56 )</code></pre>
+<pre><code>console.log( &quot;大家好！&quot; + &quot;我要宣布！&quot; )</code></pre>
+<pre><code>console.log( &quot;這學期的成績為：&quot; + ((100 + 20 - 10 * 6) / 2 % 11 * 10))</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-27">
+    <section class="slide-content"><h3 id="-">把他們印出來！</h3>
+<pre><code>console.log( 56 )</code></pre>
+<pre><code>console.log( &quot;大家好！&quot; + &quot;我要宣布！&quot; )</code></pre>
+<pre><code>console.log( &quot;這學期的成績為：&quot; + ((100 + 20 - 10 * 6) / 2 % 11 * 10))</code></pre>
+<p>DEMO</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-28">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-1">程式碼練習 1</h4>
+<h4 id="-">題目：</h4>
+<p>小頭今天出門去早餐店買了一份蛋餅和一杯奶茶，蛋餅一份 25 元，奶茶一份 15 元，不過今天蛋餅打 8 折，於是小頭開心地買了早餐回家。請問小頭買早餐一共花了多少錢。(用程式印出計算式和答案)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-29">
+    <section class="slide-content"><h1 id="-">接著要有多 個/行 指令了</h1>
+<h2 id="-">使用左邊！</h2>
+<h2 id="-demo">使用方法介紹 DEMO</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-30">
+    <section class="slide-content"><h1 id="-">變數</h1>
+<h2 id="-">程式執行的過程中，暫時存放資料的地方</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-31">
+    <section class="slide-content"><h3 id="javascript-">Javascript 的變數宣告</h3>
+<ul>
+<li>關鍵字：<code>var</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-32">
+    <section class="slide-content"><h3 id="javascript-">Javascript 的變數宣告</h3>
+<ul>
+<li>關鍵字：<code>var</code></li>
+</ul>
+<p><img src="http://i.imgur.com/C3Iyj9c.png" alt="varies"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-33">
+    <section class="slide-content"><h3 id="javascript-">Javascript 的變數宣告</h3>
+<ul>
+<li>關鍵字：<code>var</code></li>
+</ul>
+<p><img src="http://i.imgur.com/C3Iyj9c.png" alt="varies"><br><img src="http://i.imgur.com/pWNJDbp.png" alt="variable"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-34">
+    <section class="slide-content"><h3 id="javascript-">Javascript 的變數宣告</h3>
+<ul>
+<li>關鍵字：<code>var</code></li>
+<li><code>var 變數名稱</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-35">
+    <section class="slide-content"><h3 id="javascript-">Javascript 的變數宣告</h3>
+<ul>
+<li>關鍵字：<code>var</code></li>
+<li><code>var 變數名稱</code></li>
+</ul>
+<pre><code>var name
+var grade</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-36">
+    <section class="slide-content"><h1 id="-">空間出來了，</h1>
+<h2 id="-">放東西進去才有用</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-37">
+    <section class="slide-content"><h3 id="-">空間出來了，放東西進去才有用</h3>
+<pre><code>var name = &quot;西瓜&quot;
+var grade = 3</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-38">
+    <section class="slide-content"><h3 id="-">空間出來了，放東西進去才有用</h3>
+<pre><code>var name = &quot;西瓜&quot;
+var grade = 3</code></pre>
+<ul>
+<li><code>=</code> 的意思是把東西從右邊丟到左邊</li>
+<li>意思是使之相等，而不是數學的等於</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-39">
+    <section class="slide-content"><h3 id="-">空間出來了，放東西進去才有用</h3>
+<pre><code>var name = &quot;西瓜&quot;
+var grade = 3</code></pre>
+<ul>
+<li><code>=</code> 的意思是把東西從右邊丟到左邊</li>
+<li>意思是使之相等，而不是數學的等於</li>
+</ul>
+<pre><code>name = &quot;妹子&quot;</code></pre>
+<ul>
+<li>功能就是用來改變變數的值</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-40">
+    <section class="slide-content"><h3 id="-">空間出來了，放東西進去才有用</h3>
+<pre><code>var name = &quot;西瓜&quot;
+var grade = 3</code></pre>
+<ul>
+<li><code>=</code> 的意思是把東西從右邊丟到左邊</li>
+<li>意思是使之相等，而不是數學的等於</li>
+</ul>
+<pre><code>name = &quot;妹子&quot;</code></pre>
+<ul>
+<li>功能就是用來改變變數的值</li>
+</ul>
+<p>DEMO</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-41">
+    <section class="slide-content"><h1 id="-">使用變數</h1>
+<h2 id="-">把剛剛存進去的東西拿來使用</h2>
+<h2 id="-">命名好的變數名稱即代表那個值</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-42">
+    <section class="slide-content"><h3 id="-">使用變數</h3>
+<pre><code>console.log( name )
+console.log( grade )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-43">
+    <section class="slide-content"><h3 id="-">使用變數做運算</h3>
+<pre><code>console.log( &quot;我是&quot; + name )
+console.log( &quot;我&quot; + grade + &quot;年級&quot; )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-44">
+    <section class="slide-content"><h3 id="-">使用變數做運算</h3>
+<pre><code>console.log( &quot;我是&quot; + name )
+console.log( &quot;我&quot; + grade + &quot;年級&quot; )
+
+var decrease = 2;
+console.log( &quot;我被降了&quot; + decrease + &quot;級&quot; )
+grade = grade - decrease
+console.log( &quot;我&quot; + grade + &quot;年級&quot; )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-45">
+    <section class="slide-content"><h3 id="-">使用變數做運算</h3>
+<pre><code>console.log( &quot;我是&quot; + name )
+console.log( &quot;我&quot; + grade + &quot;年級&quot; )
+
+var decrease = 2;
+console.log( &quot;我被降了&quot; + decrease + &quot;級&quot; )
+grade = grade - decrease
+console.log( &quot;我&quot; + grade + &quot;年級&quot; )</code></pre>
+<p>DEMO</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-46">
+    <section class="slide-content"><h1 id="-">在變數上做運算</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-47">
+    <section class="slide-content"><h3 id="-">在變數上做運算</h3>
+<pre><code>grade += 1
+console.log( grade )
+
+grade -= 1
+console.log( grade )
+
+grade *= 2
+console.log( grade )
+
+grade /= 2
+console.log( grade )
+
+name += &quot;西瓜&quot;
+console.log( name )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-48">
+    <section class="slide-content"><h3 id="-">在變數上做運算</h3>
+<pre><code>grade += 1
+console.log( grade )
+
+grade -= 1
+console.log( grade )
+
+grade *= 2
+console.log( grade )
+
+grade /= 2
+console.log( grade )
+
+name += &quot;西瓜&quot;
+console.log( name )</code></pre>
+<p>DEMO &amp; 講解</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-49">
+    <section class="slide-content"><h3 id="-">在變數上做運算，更看不懂的寫法</h3>
+<pre><code>grade ++
+console.log( grade )
+
+grade --
+console.log( grade )</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-50">
+    <section class="slide-content"><h3 id="-">在變數上做運算，更看不懂的寫法</h3>
+<pre><code>grade ++
+console.log( grade )
+
+grade --
+console.log( grade )</code></pre>
+<p>就更簡短這樣，DEMO &amp; 講解</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-51">
+    <section class="slide-content"><h3 id="btw">BTW</h3>
+<ul>
+<li>這是動態語言，不需要先把型態說好，一個 <code>var</code> 通吃所有型態</li>
+<li>沒有 <code>var</code> 事先宣告也不會出錯，但可能出問題</li>
+<li>而且在 JS 中 <code>;</code> 分號是不見得必要的</li>
+</ul>
+<blockquote>
+<p>大一的朋友請注意:<br>系上教的Ｃ語言
+字串要用 <code>&quot;</code> 包，字元用 <code>&#39;</code> 包<br>而且要先宣告型態...<br>並且每個敘述結束一定要<code>;</code><br><code>printf</code> 也要把型態搞清楚...</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-52">
+    <section class="slide-content"><h1 id="-">程式常常不是只是要跑而已</h1>
+<h2 id="-">讓別人看得懂也是很重要的</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-53">
+    <section class="slide-content"><h1 id="-">程式常常不是只是要跑而已</h1>
+<h2 id="-">讓別人看得懂也是很重要的</h2>
+<h2 id="-">剛剛那些運算如果我不講應該沒有人知道在幹嘛吧 (?)</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-54">
+    <section class="slide-content"><p><pre style="margin-top: 150px"><code style="font-size: 50px">// 我是註解，會被當成黑畫面跳過</code></pre></p>
+<h2 id="-">可以放置一些非程式碼的東西在裡面</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-55">
+    <section class="slide-content"><pre><code>grade += 1
+// grade = grade + 1
+
+grade -= 1
+// grade = grade - 1
+
+grade *= 2
+// grade = grade * 2
+
+grade /= 2
+// grade = grade / 2
+
+name += &quot;西瓜&quot;
+// name = name + &quot;西瓜&quot;</code></pre>
+<h2 id="-">大概可以這樣用</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-56">
+    <section class="slide-content"><pre><code>grade += 1
+// grade = grade + 1
+
+grade -= 1
+// grade = grade - 1
+
+grade *= 2
+// grade = grade * 2
+
+grade /= 2
+// grade = grade / 2
+
+name += &quot;西瓜&quot;
+// name = name + &quot;西瓜&quot;</code></pre>
+<h2 id="-">大概可以這樣用</h2>
+<h2 id="demo">DEMO</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-57">
+    <section class="slide-content"><pre><code>/* 
+我是也是註解
+你看不到我
+你看不到我
+你看不到我
+你看不到我
+你看不到我
+你看不到我
+你看不到我
+你看不到我
+你看不到我
+ */</code></pre>
+<h2 id="-">這種註解方式可以一次註解很多行</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-58">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-2-">程式碼練習 2 ，題目：</h4>
+<p>宣告一個變數，指定其初始值為 pomelo，並使用 console.log 印出以下圖案。</p>
+<p><img src="http://i.imgur.com/qvuId2O.png" alt="Imgur"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-59">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-3-">程式碼練習 3 ，題目：</h4>
+<p>請依照以下程式碼的指示在 <a href="http://repl.it/languages/JavaScript"><kbd>repl.it</kbd></a> 網站執行。</p>
+<pre><code>var a;
+console.log(&#39;a = &#39; + a);
+
+// Step 1: 複製這段程式碼到 repl.it
+// Step 2: 執行這段程式碼
+// Step 3: 直接在右側黑黑的視窗輸入 a = 10
+// Step 4: 然後再執行一次這個程式碼
+// Step 5: 直接在右側黑黑的視窗輸入 a = &#39;A plain text&#39;
+// Step 6: 在執行一次</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-60">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-4-">程式碼練習 4 ，題目：</h4>
+<p>定義兩個不同的變數 <code>a</code>、<code>b</code>，請寫一個程式，讓 <code>a</code>、<code>b</code> 的值互相交換。你的程式必須先印出 <code>a</code> 和 <code>b</code> 的資料，然後將 <code>a</code> 和 <code>b</code> 的資料進行交換，最後在印出一次 <code>a</code> 和 <code>b</code> 的資料。</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-61">
+    <section class="slide-content"><h3 id="-">其實還有一種每個語言都有的型態</h3>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-62">
+    <section class="slide-content"><h3 id="-">其實還有一種每個語言都有的型態</h3>
+<p><img src="http://i.imgur.com/BBAZRvq.png" alt="boolean"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-63">
+    <section class="slide-content"><h3 id="-">其實還有一種每個語言都有的型態</h3>
+<p><img src="http://i.imgur.com/BBAZRvq.png" alt="boolean">  </p>
+<ul>
+<li>這種型態只有 <code>是</code> 和 <code>否</code> 兩種值</li>
+<li><code>true</code> or <code>false</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-64">
+    <section class="slide-content"><h1 id="-">產生布林值</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-65">
+    <section class="slide-content"><h3 id="-">產生布林值</h3>
+<ul>
+<li>請問 <code>689</code> 是否比 <code>609</code> 大？</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-66">
+    <section class="slide-content"><h3 id="-">產生布林值</h3>
+<ul>
+<li>請問 <code>689</code> 是否比 <code>609</code> 大？</li>
+<li><code>689 &gt; 609</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-67">
+    <section class="slide-content"><h3 id="-">產生布林值</h3>
+<ul>
+<li>請問 <code>689</code> 是否比 <code>609</code> 大？</li>
+<li><code>689 &gt; 609</code> =&gt; <code>true</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-68">
+    <section class="slide-content"><h3 id="-">產生布林值</h3>
+<ul>
+<li>請問 <code>689</code> 是否比 <code>609</code> 大？</li>
+<li><code>689 &gt; 609</code> =&gt; <code>true</code></li>
+<li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>,<code>!=</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-69">
+    <section class="slide-content"><h3 id="-">產生布林值</h3>
+<ul>
+<li>請問 <code>689</code> 是否比 <code>609</code> 大？</li>
+<li><code>689 &gt; 609</code> =&gt; <code>true</code></li>
+<li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>,<code>!=</code></li>
+<li>請問 <code>馬</code> 與 <code>鹿</code> 是否一樣？</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-70">
+    <section class="slide-content"><h3 id="-">產生布林值</h3>
+<ul>
+<li>請問 <code>689</code> 是否比 <code>609</code> 大？</li>
+<li><code>689 &gt; 609</code> =&gt; <code>true</code></li>
+<li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>,<code>!=</code></li>
+<li>請問 <code>馬</code> 與 <code>鹿</code> 是否一樣？</li>
+<li><code>&#39;馬&#39; == &quot;鹿&quot;</code> =&gt; <code>false</code>, 電腦不會指鹿為馬的ㄎㄎ</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-71">
+    <section class="slide-content"><h1 id="-">布林可以幹麻？</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-72">
+    <section class="slide-content"><h1 id="-">布林可以幹麻？</h1>
+<h2 id="-if-else-">常常拿來做流程控制，<code>if</code>, <code>else</code>...</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-73">
+    <section class="slide-content"><h3 id="-">基本流程控制</h3>
+<pre><code>if(true){
+    console.log(&quot;我會被顯示&quot;)
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-74">
+    <section class="slide-content"><h3 id="-">基本流程控制</h3>
+<pre><code>if(false){
+    console.log(&quot;我不會被顯示&quot;)
+}
+else{
+    console.log(&quot;我才會被顯示&quot;)
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-75">
+    <section class="slide-content"><h1 id="-">產生布林值，並運用之</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-76">
+    <section class="slide-content"><h3 id="-">產生布林值，並運用之</h3>
+<ul>
+<li>若 <code>689</code> 比 <code>609</code> 大，請說 <code>!!</code>，否則說 <code>??</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-77">
+    <section class="slide-content"><h3 id="-">產生布林值，並運用之</h3>
+<ul>
+<li>若 <code>689</code> 比 <code>609</code> 大，請說 <code>!!</code>，否則說 <code>??</code></li>
+</ul>
+<pre><code>var b = 689, g = 609;
+if(b &gt; g)
+    console.log(&quot;!!&quot;)
+else
+    console.log(&quot;??&quot;)</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-78">
+    <section class="slide-content"><h3 id="-">產生布林值，並運用之</h3>
+<ul>
+<li>若 <code>馬</code> 與 <code>鹿</code> 一樣，請說 <code>指鹿為馬中...</code> ，否則說 <code>你很誠實</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-79">
+    <section class="slide-content"><h3 id="-">產生布林值，並運用之</h3>
+<ul>
+<li>若 <code>馬</code> 與 <code>鹿</code> 一樣，請說 <code>指鹿為馬中...</code> ，否則說 <code>你很誠實</code></li>
+</ul>
+<pre><code>var h = &#39;馬&#39;, d = &quot;鹿&quot;;
+if(h == d)
+    console.log(&quot;指鹿為馬中...&quot;)
+else
+    console.log(&quot;你很誠實&quot;)</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-80">
+    <section class="slide-content"><h1 id="-">再用布林產生布林</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-81">
+    <section class="slide-content"><h1 id="-">再用布林產生布林</h1>
+<h2 id="-"><code>&amp;&amp;</code>, <code>||</code></h2>
+<h2 id="-"><code>且</code>, <code>或</code></h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-82">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-83">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+<li>如果 ( (若 <code>馬</code> 與 <code>鹿</code> 一樣) 且 (<code>689</code> 比 <code>609</code> 大) )</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-84">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+<li>如果 ( (若 <code>馬</code> 與 <code>鹿</code> 一樣) 且 (<code>689</code> 比 <code>609</code> 大) )</li>
+<li><code>var and_op = (h == d) &amp;&amp; (b &gt; g);</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-85">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+<li>如果 ( (若 <code>馬</code> 與 <code>鹿</code> 一樣) 且 (<code>689</code> 比 <code>609</code> 大) )</li>
+<li><code>var and_op = (h == d) &amp;&amp; (b &gt; g);</code></li>
+<li><code>console.log(and_op)</code> =&gt; <code>false</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-86">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+<li>如果 ( (若 <code>馬</code> 與 <code>鹿</code> 一樣) 或 (<code>689</code> 比 <code>609</code> 大) )</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-87">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+<li>如果 ( (若 <code>馬</code> 與 <code>鹿</code> 一樣) 或 (<code>689</code> 比 <code>609</code> 大) )</li>
+<li><code>var or_op = (h == d) || (b &gt; g);</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-88">
+    <section class="slide-content"><h3 id="-">再用布林產生布林</h3>
+<ul>
+<li>語句話一點</li>
+<li>如果 ( (若 <code>馬</code> 與 <code>鹿</code> 一樣) 或 (<code>689</code> 比 <code>609</code> 大) )</li>
+<li><code>var or_op = (h == d) || (b &gt; g);</code></li>
+<li><code>console.log(or_op)</code> =&gt; <code>true</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-89">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-5-">程式碼練習 5 ，題目：</h4>
+<p>首先，定義一個名為 <code>q</code> 的變數，並指定其初始值為 <code>5</code>。讓變數 <code>q</code> 每次加 <code>1</code>，連續加到 <code>q</code> 等於 <code>16</code> 為止。在 <code>q</code> 的值介於 <code>12</code> 到 <code>15</code> 之間時，印出 <code>q=?</code> 的資料。</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-90">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-6-">程式碼練習 6 ，題目：</h4>
+<p>有一台計程車計費方式為：里程數在 <code>1500</code> 公尺以下皆為 <code>70</code> 元，超過之里程數則以 <code>500</code> 公尺加價 <code>5</code> 元計算。請寫一程式計算車費。</p>
+<pre><code>console.log(&quot;請輸入里程數:&quot;);
+var meter = prompt();</code></pre>
+<p>這樣來取得里程數喔</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-91">
+    <section class="slide-content"><h3 id="-">練習 &amp; 休息時間</h3>
+<h4 id="-7-">程式碼練習 7 ，題目：</h4>
+<p>宣告一個變數 <code>score</code>，當 <code>score</code> 為 <code>0</code>~<code>59</code> 時顯示 <code>Bad</code>，當 <code>score</code> 為 <code>60</code>~<code>100</code> 之間時顯示 <code>Good</code>，其餘則輸出 <code>Oops!</code>。</p>
+<pre><code>console.log(&quot;請輸入分數:&quot;);
+var score = prompt();</code></pre>
+<p>這樣來取得分數喔</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-92">
+    <section class="slide-content"><h1 id="-">我們來點情境</h1>
+<h2 id="-">情境一</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-93">
+    <section class="slide-content"><h3 id="-">我們來點情境，情境一</h3>
+<p>走在路上時，遇到一個人<br>如果是學妹，則...<br>如果是學弟，則...<br>如果是這學期教你的教授，則...<br>如果是之前當過你的教授，則...<br>&nbsp;<br>&nbsp;<br>把下面這個輸入，他會隨機幫你遇到一個人</p>
+<pre><code>function meet_a_people(){
+    return [&#39;學妹&#39;,&#39;學弟&#39;,&#39;這學期教你的教授&#39;,&#39;之前當過你的教授&#39;][Math.floor(Math.random()*4)];
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-94">
+    <section class="slide-content"><h3 id="-">我們來點情境，情境一</h3>
+<p>走在路上時，遇到一個人<br>如果是學妹，則...<br>如果是學弟，則...<br>如果是這學期教你的教授，則...<br>如果是之前當過你的教授，則...  </p>
+<pre><code>the_people_you_meet = meet_a_people();
+if(the_people_you_meet == &#39;學妹&#39;)
+    console.log(&quot;學妹你好啊～最近怎麼樣啊～？&quot;);
+else if(the_people_you_meet == &#39;學弟&#39;)
+    console.log(&quot;...&quot;);
+else if(the_people_you_meet == &#39;這學期教你的教授&#39;)
+    console.log(&quot;教授好！&quot;);
+else if(the_people_you_meet == &#39;之前當過你的教授&#39;)
+    console.log(&quot;(ﾉ｀⊿´)ﾉ&quot;);</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-95">
+    <section class="slide-content"><h1 id="-">面對這種情況</h1>
+<h2 id="-">有另一種流程控制的方法</h2>
+<h2 id="-switch-case-"><code>switch</code> ... <code>case</code> ...</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-96">
+    <section class="slide-content"><h3 id="-">面對這種情況，另一種流程控制的方法</h3>
+<pre><code>the_people_you_meet = meet_a_people();switch(the_people_you_meet) {
+    case &#39;學妹&#39;:
+        console.log(&quot;學妹你好啊～最近怎麼樣啊～？&quot;);
+        break;
+    case &#39;學弟&#39;:
+        console.log(&quot;...&quot;);
+        break;
+    case &#39;這學期教你的教授&#39;:
+        console.log(&quot;教授好！&quot;);
+        break;
+    case &#39;之前當過你的教授&#39;:
+        console.log(&quot;(ﾉ｀⊿´)ﾉ&quot;);
+        break;
+    default:
+        console.log(&quot;╮(╯_╰)╭...你誰啊&quot;);
+}</code></pre>
+<p>或許沒有比較短啦，不過很多編輯器可以幫你生程式碼</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-97">
+    <section class="slide-content"><h1 id="-">我們來點情境</h1>
+<h2 id="-">情境二</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-98">
+    <section class="slide-content"><h3 id="-">我們來點情境，情境二</h3>
+<p>走在路上時，遇到一百個人<br>要分別對每個人做情境一做的事情</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-99">
+    <section class="slide-content"><h3 id="-">我們來點情境，情境二</h3>
+<p>走在路上時，遇到一百個人<br>要分別對每個人做情境一做的事情  </p>
+<p><img src="http://i.imgur.com/nP2GIt3.png" alt="needsLoop"></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-100">
+    <section class="slide-content"><h1 id="-">迴圈</h1>
+<h2 id="-">你可以簡單地叫電腦幫你做一件事情數千甚至數萬次</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-101">
+    <section class="slide-content"><h3 id="-key-word-for-">第一種迴圈，key word <code>for</code></h3>
+<ul>
+<li>歷久不衰的語法，<code>for</code> 迴圈有三格</li>
+<li>第一格為進入時會進行的</li>
+<li>第二格為每次執行 <code>{}</code> 內的程式碼之前會檢查的，為 <code>False</code> 的話會跳出這個迴圈</li>
+<li>第三格為每次執行完 <code>{}</code> 內的程式碼之後會執行的事情</li>
+</ul>
+<pre><code>for(i = 0 ; i &lt;= 100 ; i++){
+    // do something...
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-102">
+    <section class="slide-content"><h3 id="-key-word-for-">第一種迴圈，key word <code>for</code></h3>
+<pre><code>for(i = 0 ; i &lt;= 100 ; i++){
+    the_people_you_meet = meet_a_people();
+    if(the_people_you_meet == &#39;學妹&#39;)
+        console.log(&quot;學妹你好啊～最近怎麼樣啊～？&quot;);
+    else if(the_people_you_meet == &#39;學弟&#39;)
+        console.log(&quot;...&quot;);
+    else if(the_people_you_meet == &#39;這學期教你的教授&#39;)
+        console.log(&quot;教授好！&quot;);
+    else if(the_people_you_meet == &#39;之前當過你的教授&#39;)
+        console.log(&quot;(ﾉ｀⊿´)ﾉ&quot;);
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-103">
+    <section class="slide-content"><h3 id="-key-word-while-">第二種迴圈，key word <code>while</code></h3>
+<ul>
+<li>只有一格，只要那格為 <code>true</code> 就會不斷執行</li>
+</ul>
+<pre><code>var i = 0
+while(i &lt;= 100){
+    the_people_you_meet = meet_a_people();
+    if(the_people_you_meet == &#39;學妹&#39;)
+        console.log(&quot;學妹你好啊～最近怎麼樣啊～？&quot;);
+    else if(the_people_you_meet == &#39;學弟&#39;)
+        console.log(&quot;...&quot;);
+    else if(the_people_you_meet == &#39;這學期教你的教授&#39;)
+        console.log(&quot;教授好！&quot;);
+    else if(the_people_you_meet == &#39;之前當過你的教授&#39;)
+        console.log(&quot;(ﾉ｀⊿´)ﾉ&quot;);
+
+    i++;
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-104">
+    <section class="slide-content"><h1 id="-">我們來點情境</h1>
+<h2 id="-">情境三</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-105">
+    <section class="slide-content"><h3 id="-">我們來點情境，情境三</h3>
+<p>走在路上時，遇到一百個人<br>要分別把每個人的身份記下來...<br>(越來越不像正常人了啊)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-106">
+    <section class="slide-content"><h1 id="-">陣列</h1>
+<h2 id="-">簡單來說就是一大堆變數</h2>
+<h2 id="-">用編號串起來</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-107">
+    <section class="slide-content"><h3 id="-">陣列</h3>
+<ul>
+<li>用 <code>[]</code> 表示</li>
+</ul>
+<pre><code>var array = [];
+var array = [&#39;學妹&#39;,&#39;學弟&#39;,&#39;這學期教你的教授&#39;,&#39;之前當過你的教授&#39;];</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-108">
+    <section class="slide-content"><h3 id="-">陣列</h3>
+<ul>
+<li>用 <code>[]</code> 表示</li>
+<li>變數名稱後面加上 [&lt;編號&gt;] 來存取值</li>
+</ul>
+<pre><code>var array[0]; =&gt; &#39;學妹&#39;
+var array[2]; =&gt; &#39;這學期教你的教授&#39;
+var array[3]; =&gt; &#39;之前當過你的教授&#39;</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-109">
+    <section class="slide-content"><h3 id="-">陣列</h3>
+<ul>
+<li>用 <code>[]</code> 表示</li>
+<li>變數名稱後面加上 [&lt;編號&gt;] 來存取值</li>
+</ul>
+<pre><code>var peoples = [];
+for(i = 0 ; i &lt;= 100 ; i++){
+    peoples[i] = meet_a_people();
+}
+console.log(peoples);</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-110">
+    <section class="slide-content"><h3 id="-">關於一些陣列要注意的地方</h3>
+<ul>
+<li>去找拿不到的編號的時候，會得到 <code>undefined</code>，JS 不會對此噴錯</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-111">
+    <section class="slide-content"><h1 id="-">謝謝！</h1>
+<h2 id="-">其實自學是很重要的，因為自己最瞭解自己學到哪裡！</h2>
+<h2 id="-">所以有 回家作業</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-112">
+    <section class="slide-content"><h3 id="-">第一題</h3>
+<p>富翁堯堯有一天到賭場小試身手，他總共骰了十次骰子，請身為賭場管理員的你隨機產生十組整數，範圍為０～１００，數字可重複！並將此十組整數存入一陣列，此陣列名稱為rich，最後請印出這十組整數！<br>（需用到 <code>while</code> 迴圈及亂數產生 <code>Math.random()</code> ）</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-113">
+    <section class="slide-content"><h3 id="-">第二題（承上題）</h3>
+<p>因為富翁堯堯覺得骰子的值排列沒有規則，所以請你將rich陣列的值由小到大排列，並印出值<br>（使用for迴圈）</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-114">
+    <section class="slide-content"><h3 id="-">第三題（承上題）</h3>
+<p>龜毛的富翁堯堯非常喜歡偶數，所以請將排列好的rich陣列內是偶數的值印出<br>（使用switch）</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-115">
+    <section class="slide-content"><h3 id="-">第四題（承上題）</h3>
+<p>討厭的富翁堯堯指定將rich陣列奇數索引值的值平方後相加，再減去偶數索引值的值，並印出值</p>
+<p>(平方可使用 <code>Math.pow(x,y) //Returns the value of x to the power of y</code> ）</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-116">
+    <section class="slide-content"><h3 id="-">第五題</h3>
+<p>令 i=-3, j=2, k=0  </p>
+<ol>
+<li><p>先分別試試 &amp;&amp; 運算子和 || 運算子對運算式做判斷（ex. print 出 i<0 && j>0 的結果, etc），並整理出這兩的運算子的規律（在什麼狀況下會為 true、什麼狀況為 false），那麼你知道 i&lt;0 || j==1 &amp;&amp; k!=0 的結果為什麼是 true 嗎？</p>
+</li>
+<li><p>接著我們來試試直接對變數做運算，請把 i&amp;&amp;j, i&amp;&amp;k, j&amp;&amp;k 印出來，並將變數前後位置對調，請用 || 作上述動作，你知道為什麼印出來結果會是這樣嗎？</p>
+</li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-117">
+    <section class="slide-content"><h3 id="-">第五題，提示</h3>
+<pre><code>補充:  
+在JavaScript進行邏輯運算時，運算式中的 &quot;參數值&quot; 會被當作布林值作判斷，  
+若參數值未設定，或是參數值為 0, -0, null, false, NaN, undefined, 空字串&quot;&quot;，則當作false；參數為其它值或是物件，則為 true。  
+值得一提的是，在進行邏輯運算之後，運算式將根據下列規則作數值的回傳:</code></pre>
+<pre><code>在 &amp;&amp; 運算中，有2個規則:
+如果運算式轉為布林值為false，則回傳該數值。(例如0, null, undefined, NaN和空字串)如果為true，則回傳右邊運算式的數值；換言之，當全部成立時，回傳最右邊運算式的數值。
+ex. 在上述題目中，i&amp;&amp;j的結果，由於i=-3, j=2，在進行邏輯運算時，兩個參數皆為true，故 &amp;&amp;  運算後的結果為true。根據第2個規則，結果將回傳右邊的運算式的數值2。</code></pre>
+<pre><code>此外，假如左邊的運算式結果為true時，將不會執行右邊的運算式。  
+
+類似於&amp;&amp;，在 || 運算中，也有2個規則:
+如果運算式轉為布林值為true，則回傳該數值。
+如果為false，則回傳右邊運算式的數值；如果全部為false，則回傳false。</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-118">
+    <section class="slide-content"><h3 id="-">第六題</h3>
+<p>宣告一個變數 <code>name</code>，並將其指定為你自己的英文名字並印出，然後在底下使用 <code>if</code> 進行判斷，如果 <code>name</code> 的長度大於 <code>5</code>，則印出 <code>Longer than five.</code>；否則，印出 <code>Shorter than six.</code>。</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-119">
+    <section class="slide-content"><div class="author">
+  <h1 class="name">課程 FB 社團</h1>
+    <h3 class="url">
+      <a href="https://www.facebook.com/groups/348522108647062/">https://www.facebook.com/groups/348522108647062/</a>
+    </h3>
+</div>
+</section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  window.history.replaceState({} , null, '#' + currentPosition());
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>

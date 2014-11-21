@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Javascript 2</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="css/reveal.min.css">
+  <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+  <!-- For syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+  <script>
+    if (window.location.search.match(/print-pdf/gi)) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = 'css/print/pdf.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+  </script>
+
+  <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Javascript 2</h1>
+        <p>
+          <a href="http://nchusg.org/~cjhwong/js2">nchusg.org/~cjhwong/js2</a>
+        </p>
+        <p>
+          <small>Created by Chuan-Jhe Hwong / <a href="mailto://CJHwong@gmail.com">CJHwong@gmail.com</a></small>
+        </p>
+      </section>
+
+      <section>
+        <!-- 函數簡介 -->
+        <section>
+          <h1>Function</h1>
+        </section>
+
+        <section>
+          <h2>function ?</h2>
+        </section>
+
+        <section>
+          <h2>function ?</h2>
+          <h2>f(x) = x + 1</h2>
+        </section>
+
+        <section>
+          <h2>function ?</h2>
+          <h2>f(x) = x + 1</h2>
+          <ul>
+            <li>x + 1: main structure of the function</li>
+            <li>f(x): name and parameters of the function</li>
+            <li>f(1), f(2)...: return value of the function</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>使用函數的優點</h2>
+          <ul>
+          </ul>
+        </section>
+
+        <section>
+          <h2>使用函數的優點</h2>
+          <ul>
+            <li>簡化重複的程式碼</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>使用函數的優點</h2>
+          <ul>
+            <li>簡化重複的程式碼</li>
+            <li>增加程式碼的再利用性</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>使用函數的優點</h2>
+          <ul>
+            <li>簡化重複的程式碼</li>
+            <li>增加程式碼的再利用性</li>
+            <li>適當切割程式功能可以便利維護</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>使用函數的優點</h2>
+          <ul>
+            <li>簡化重複的程式碼</li>
+            <li>增加程式碼的再利用性</li>
+            <li>適當切割程式功能可以便利維護</li>
+            <li>好的函數命名能使程式語言更像在說話</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>何時使用函數</h2>
+          <pre><code class="javascript">
+var nums = [10, 3, 16, 8, 20, 13, 11];
+
+var max = 0;
+
+var i;
+for (i = 0; i < nums.length; i++) {
+  if nums[i] > max {
+    max = nums[i];
+  }
+}
+
+console.log(max);
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>how to make this better?</h2>
+          <pre><code class="javascript">
+var nums = [10, 3, 16, 8, 20, 13, 11];
+
+var max = 0; // Record the max number
+
+// Find the max number
+var i;
+for (i = 0; i < nums.length; i++) {
+  if nums[i] > max {
+    max = nums[i];
+  }
+}
+
+console.log(max);
+  </code></pre>
+        </section>
+
+        <section>
+          <h2>使用函數包裝的程式碼</h2>
+          <pre><code class="javascript">
+function max(nums) {
+  "Return the max number of an array"
+  var max = 0;
+  var i;
+  for (i = 0; i < nums.length; i++) {
+    if (nums[i] > max) {
+      max = nums[i]
+    }
+  }
+  return max;
+}
+
+var nums = [10, 3, 16, 8, 20, 13, 11];
+
+console.log(max(nums));
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Functional scope</h2>
+          <pre><code class="javascript">
+function f(n) {
+  n += 10;
+  console.log(n);
+}
+
+n = 1;
+f(n);
+console.log(n);
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>DEMO</h2>
+          <p>建立一接收兩個數字的函數 f(n1, n2)，並使用函數印出 n1 到 n2 中間的數</p>
+        </section>
+
+      </section>
+
+      <section>
+        <!-- 一級函數 -->
+        <section>
+          <h1>First-class function</h1>
+        </section>
+
+        <section>
+          <h2>在 JS，宣告一個函數就相當於宣告一個變數</h2>
+          <pre><code class="javascript">
+function addOne(n) {
+  return n + 1;
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>你可以傳遞函數</h2>
+          <pre><code class="javascript">
+function addOne(n) {
+  return n + 1;
+}
+
+var f = addOne;
+console.log(f(10));
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>什麼是一級函數？</h2>
+        </section>
+
+        <section>
+          <h2>什麼是一級函數？</h2>
+          <p>當函數可被視為一級成員(變數……)傳遞時，稱為一級函數</p>
+        </section>
+
+        <section>
+          <h2>for example</h2>
+          <pre><code class="javascript">
+function calc(n1, n2, f) {
+  return f(n1, n2);
+}
+
+function plus(n1, n2) {
+  return n1 + n2;
+}
+
+function multiply(n1, n2) {
+  return n1 * n2;
+}
+
+var n1 = 10, n2 = 20;
+console.log(calc(n1, n2, plus));
+console.log(calc(n1, n2, multiply));
+          </code></pre>
+        </section>
+        <!-- 匿名函數 -->
+        <section>
+          <h1>Anonymous function</h1>
+        </section>
+
+        <section>
+          <h2>建立一個匿名函數</h2>
+          <pre><code class="javascript">
+(function(name) {
+  console.log("Hi I am " + name);
+})("CJHwong");
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>如何使用匿名函數</h2>
+          <pre><code class="javascript">
+var n1 = 10, n2 = 20;
+console.log(calc(n1, n2, function(n1, n2) {
+  return n1 + n2;
+}));
+
+console.log(calc(n1, n2, function(n1, n2) {
+  return n1 * n2;
+}));
+  </code></pre>
+        </section>
+
+        <section>
+          <h2>替匿名函數命名</h2>
+          <pre><code class="javascript">
+var introduce = function(name) {
+  console.log("Hi I am " + name);
+};
+
+introduce("CJHwong");
+  </code></pre>
+        </section>
+
+        <section>
+          <h2>demo</h2>
+          <p>實作 calc 函數，並使用匿名函數完成加減乘除四種運算</p>
+        </section>
+
+
+      </section>
+
+      <section>
+        <!-- closure -->
+        <section>
+          <h1>Closure</h1>
+        </section>
+
+        <section>
+          <h2>什麼是閉包？</h2>
+        </section>
+
+        <section>
+          <h2>什麼是閉包？</h2>
+          <p>若建立函數時，函數內的狀態能夠被儲存，則稱為閉包</p>
+        </section>
+
+        <section>
+          <h2>閉包由兩個以上的函數組成</h2>
+          <pre><code class="javascript">
+function increase() {
+  var n = 0;
+  return function() {
+    n += 1;
+    return n;
+  }
+}
+
+var f = increase();
+console.log(f());
+console.log(f());
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>demo</h2>
+          <p>使用 Closure 實作 Fibonacci Series（每執行一次函數生成數列的下一項）</p>
+        </section>
+
+      </section>
+
+      <section>
+        <!-- Object -->
+        <section>
+          <h1>Object</h1>
+        </section>
+
+        <section>
+          <h2>在 JS，物件是一種資料型態(data type)</h2>
+          <pre><code class="javascript">
+var obj = {
+  foo: "I am foo",
+  bar: "I am bar"
+};
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>How to use objects?</h2>
+          <pre><code class="javascript">
+console.log(obj);
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>How to use objects?</h2>
+          <pre><code class="javascript">
+console.log(obj.foo);
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>How to use objects?</h2>
+          <pre><code class="javascript">
+console.log(obj.foo);
+console.log(obj["bar"]);
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>How to use objects?</h2>
+          <pre><code class="javascript">
+console.log(obj.foo);
+console.log(obj["bar"]);
+          </code></pre>
+          <p>the same effect!</p>
+        </section>
+
+        <section>
+          <h2>DEMO</h2>
+          <p>宣告一個物件 people，使 people 有屬性 name, age, sex，並分別印出來</p>
+        </section>
+
+      </section>
+
+      <section>
+        <!-- Object-oriented Programming -->
+        <section>
+          <h1>Object-oriented Programming</h1>
+        </section>
+
+        <section>
+          <h2>what is an object?</h2>
+        </section>
+
+        <section>
+          <h2>what is an object?</h2>
+          <img src="http://upload.wikimedia.org/wikipedia/commons/1/1c/Smiling_Dog_Face.jpg" />
+        </section>
+
+        <section>
+          <h2>how?</h2>
+          <ul>
+            <li>Dog is a kind of animal</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>how?</h2>
+          <ul>
+            <li>Dog is a kind of animal</li>
+            <li>Dogs have diffrent hair colors</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>how?</h2>
+          <ul>
+            <li>Dog is a kind of animal</li>
+            <li>Dogs have diffrent hair colors</li>
+            <li>Dogs have names</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>how to implement a dog object</h2>
+          <pre><code class="javascript">
+var Dog = {
+  name: "Doge",
+  color: "Yellow"
+};
+
+console.log(Dog.name);
+console.log(Dog.color);
+          </code></pre>
+        </section>
+
+        <!-- Methods -->
+        <section>
+          <h1>Methods</h1>
+        </section>
+
+        <section>
+          <h1>Methods</h1>
+          <p>means something objects can do</p>
+        </section>
+
+        <section>
+          <h2>implementation</h2>
+          <pre><code class="javascript">
+var Dog = {
+  name: "Doge",
+  color: "Yellow",
+  say: function() {
+    console.log("Bow wow! I am " + this.name);
+  }
+};
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>DEMO</h2>
+          <p>建立兩個物件，提供屬性 name 以及 age，並建立方法 hi，印出兩個屬性</p>
+        </section>
+
+      </section>
+
+      <section>
+        <!-- Common Objects -->
+        <section>
+          <h1>common objects</h1>
+        </section>
+
+        <!-- CONSOLE -->
+        <section>
+          <h2>console</h2>
+        </section>
+
+        <section>
+          <h2>console</h2>
+          <p>What is CONSOLE?</p>
+        </section>
+
+        <section>
+          <h2>console</h2>
+          <p>What is CONSOLE?</p>
+          <p>Press F12 on your keyboard</p>
+        </section>
+
+        <section>
+          <h2>common console methods</h2>
+          <pre><code class="javascript">
+console.log("Hi"); // pass a string and console will display it
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>common console methods</h2>
+          <pre><code class="javascript">
+console.log("Hi"); // pass a string and console will display it
+console.error("Error occurred!");
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>common console methods</h2>
+          <pre><code class="javascript">
+console.log("Hi"); // pass a string and console will display it
+console.error("Error occurred!");
+console.warn("Warnning!");
+          </code></pre>
+        </section>
+
+        <!-- MATH -->
+        <section>
+          <h1>Math</h1>
+        </section>
+
+        <section>
+          <h2>common math methods</h2>
+          <pre><code class="javascript">
+            Math.random(); // Generates a random number between 0 and 1
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>common math methods</h2>
+          <pre><code class="javascript">
+            Math.random(); // Generates a random number between 0 and 1
+            Math.floor(0.1); // Returns 0
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>common math methods</h2>
+          <pre><code class="javascript">
+            Math.random(); // Generates a random number between 0 and 1
+            Math.floor(0.1); // Returns 0
+            Math.ceil(0.1); // Returns 1
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>common math methods</h2>
+          <pre><code class="javascript">
+            Math.random(); // Generates a random number between 0 and 1
+            Math.floor(0.1); // Returns 0
+            Math.ceil(0.1); // Returns 1
+            Math.abs(-10); // Returns 10
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>common math methods</h2>
+          <pre><code class="javascript">
+            Math.random(); // Generates a random number between 0 and 1
+            Math.floor(0.1); // Returns 0
+            Math.ceil(0.1); // Returns 1
+            Math.abs(-10); // Returns 10
+            Math.sqrt(4) // Pass an integer and get its squre root
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>DEMO</h2>
+          <p>生成十個範圍由 0~10 的隨機數，使用 log 印出小於等於三的數，使用 warn 印出小於等於七大於三的數，使用 error 印出小於等於十大於七的數</p>
+        </section>
+
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.min.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+      transition: 'none',
+      //transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+      dependencies: [{
+        src: 'lib/js/classList.js',
+        condition: function() {
+          return !document.body.classList;
+        }
+      }, {
+        src: 'plugin/markdown/marked.js',
+        condition: function() {
+          return !!document.querySelector('[data-markdown]');
+        }
+      }, {
+        src: 'plugin/markdown/markdown.js',
+        condition: function() {
+          return !!document.querySelector('[data-markdown]');
+        }
+      }, {
+        src: 'plugin/highlight/highlight.js',
+        async: true,
+        callback: function() {
+          hljs.initHighlightingOnLoad();
+        }
+      }, {
+        src: 'plugin/zoom-js/zoom.js',
+        async: true,
+        condition: function() {
+          return !!document.body.classList;
+        }
+      }, {
+        src: 'plugin/notes/notes.js',
+        async: true,
+        condition: function() {
+          return !!document.body.classList;
+        }
+      }]
+    });
+  </script>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>
